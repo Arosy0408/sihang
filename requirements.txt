@@ -1,0 +1,11 @@
+flask
+flask-bootstrap
+flask-sqlalchemy
+flask-wtf
+wtforms
+email_validator
+flask-bcrypt == 0.7.1
+flask-login
+flask-mail
+Werkzeug == 2.0.0
+PyJWT
