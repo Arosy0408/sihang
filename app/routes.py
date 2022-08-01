@@ -24,13 +24,17 @@ def index ():
     n_followed = len(current_user.followed)
     page = request.args.get('page',1,type=int)
     posts = Post.query.order_by(Post.timestamp.desc()).paginate(page,2,False)
-    return render_template('index.html',form=form,posts=posts,n_followers=n_followers,n_followed=n_followed,)
+    return render_template('index.html',form=form,posts=posts,n_followers=n_followers,n_followed=n_followed)
     #使用render_template调用其中的HTML文件
 
 #创建登录页面路由
 @app.route('/register', methods=['GET','POST'])
 def register():
     title='注册'
+
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+        
     form=RegisterForm()
     if form.validate_on_submit():
         username=form.username.data
@@ -40,7 +44,7 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('注册成功',category='success')
-        return redirect(url_for('index'))
+        return redirect(url_for('login'))
 
         #检测数据是否正常读取
         print(username,email,password)
